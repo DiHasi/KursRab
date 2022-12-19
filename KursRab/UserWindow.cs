@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -133,8 +134,8 @@ namespace KursRab
                 string commandString1 = String.Empty;
                 string commandString4 = String.Empty;
                 string commandString5 = String.Empty;
-                string commandString2 = $"{(checkBox2.Checked ? $"applications.create_date = CDate(\"{dateTimePicker1.Value.Year}-{dateTimePicker1.Value.Month}-{dateTimePicker1.Value.Day} 00:00:00\")" : "")}";
-                string commandString3 = $"{(checkBox3.Checked ? $"applications.create_date = CDate(\"{dateTimePicker2.Value.Year}-{dateTimePicker2.Value.Month}-{dateTimePicker2.Value.Day} 00:00:00\")" : "")}";
+                string commandString2 = $"{(checkBox2.Checked ? $"applications.create_date BETWEEN #{dateTimePicker1.Value.Month}/{dateTimePicker1.Value.Day}/{dateTimePicker1.Value.Year}# AND #{DateTime.Now.Month}/{DateTime.Now.Day}/{DateTime.Now.Year}#" : "")}";
+                string commandString3 = $"{(checkBox3.Checked ? $"applications.complete_date BETWEEN #{dateTimePicker2.Value.Month}/{dateTimePicker2.Value.Day}/{dateTimePicker2.Value.Year}# AND #{DateTime.Now.Month}/{DateTime.Now.Day}/{DateTime.Now.Year}#" : "")}";
 
                 if (comboBoxList.Any(c => c.SelectedIndex != -1))
                 {
@@ -150,7 +151,7 @@ namespace KursRab
                     values[0] += " WHERE " + values[1];
                     values.RemoveAt(1);
                 }
-
+                
                 UpdateDataGridView(new OleDbCommand(string.Join(" AND ", values), conn).ExecuteReader());
 
             }

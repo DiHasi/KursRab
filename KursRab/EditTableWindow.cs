@@ -105,7 +105,7 @@ namespace KursRab
             try
             {
                 int value = 0;
-                if (dataGridView1[0, 0].Value.ToString() == "id")
+                if (dataGridView1[0, 0].ReadOnly)
                 {
                     value = 1;
                 }
@@ -116,7 +116,7 @@ namespace KursRab
                     if (i < ColumnNames.Count - 1) sql += ", ";
                 }
                 sql += ") VALUES (";
-                for (int i = 0; i < dataGridView1.Rows[newRowId - 1].Cells.Count; i++)
+                for (int i = value; i < dataGridView1.Rows[newRowId - 1].Cells.Count; i++)
                 {
                     var x = dataGridView1.Rows[newRowId - 1].Cells[i].Value;
                     if (ColumnTypes[i].ToString() == "System.Int32")
