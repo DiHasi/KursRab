@@ -123,12 +123,12 @@ namespace KursRab
                             dataGridView1.Rows[i].Cells[2].Value.ToString() == "Int")
                         {
                             CommandString += $"{dataGridView1.Rows[i].Cells[1].Value} counter CONSTRAINT i PRIMARY KEY,\n";
+                            continue;
                         }
                     }
-                    else
-                    {
-                        CommandString += $"{dataGridView1.Rows[i].Cells[1].Value} {dataGridView1.Rows[i].Cells[2].Value} CONSTRAINT i PRIMARY KEY,\n";
-                    }
+
+                    CommandString += $"{dataGridView1.Rows[i].Cells[1].Value} {dataGridView1.Rows[i].Cells[2].Value} CONSTRAINT i PRIMARY KEY,\n";
+                    
 
                 }
                 else

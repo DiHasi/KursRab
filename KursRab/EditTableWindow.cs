@@ -104,14 +104,19 @@ namespace KursRab
         {
             try
             {
+                int value = 0;
+                if (dataGridView1[0, 0].Value.ToString() == "id")
+                {
+                    value = 1;
+                }
                 var sql = $"INSERT INTO {comboBox1.SelectedValue} (";
-                for (int i = 1; i < ColumnNames.Count; i++)
+                for (int i = value; i < ColumnNames.Count; i++)
                 {
                     sql += $"[{ColumnNames[i]}]";
                     if (i < ColumnNames.Count - 1) sql += ", ";
                 }
                 sql += ") VALUES (";
-                for (int i = 1; i < dataGridView1.Rows[newRowId - 1].Cells.Count; i++)
+                for (int i = 0; i < dataGridView1.Rows[newRowId - 1].Cells.Count; i++)
                 {
                     var x = dataGridView1.Rows[newRowId - 1].Cells[i].Value;
                     if (ColumnTypes[i].ToString() == "System.Int32")
@@ -121,7 +126,7 @@ namespace KursRab
                     if (i < dataGridView1.Rows[newRowId - 1].Cells.Count - 1) sql += ",";
                 }
                 sql += ")";
-                ColumnTypes = ColumnTypes;
+                MessageBox.Show(sql);
                 new OleDbCommand(sql, conn).ExecuteNonQuery();
                 UpdateDataGridView();
                 dataGridView1.AllowUserToAddRows = true;
