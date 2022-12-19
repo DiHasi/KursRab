@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Message = Telegram.Bot.Types.Message;
-
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace KursRab
 {
@@ -36,7 +30,7 @@ namespace KursRab
             comboBoxList = new List<ComboBox>() { ServiceComboBox, StatusComboBox, WorkerComboBox };
         }
 
-        
+
         private void FillComboBoxes()
         {
             string strSql = "SELECT id, name FROM pricelist";
@@ -160,7 +154,7 @@ namespace KursRab
                 UpdateDataGridView(new OleDbCommand(string.Join(" AND ", values), conn).ExecuteReader());
 
             }
-            
+
         }
 
         // убирает все выбранные CheckBox
@@ -186,6 +180,36 @@ namespace KursRab
                 UpdateDataGridView();
             };
             adminWindow.Visible = true;
+        }
+
+        private void ExportCSVButton_Click(object sender, EventArgs e)
+        {
+            Excel._Application app = new Excel.Application();
+            Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+            Excel._Worksheet worksheet = null;
+            app.Visible = true;
+            worksheet = workbook.Sheets["Лист1"];
+            worksheet = workbook.ActiveSheet;
+            worksheet.Name = "Exported from gridview";
+            worksheet.PageSetup.Orientation = Excel.XlPageOrientation.xlLandscape;
+            worksheet.PageSetup.TopMargin = 1;
+            worksheet.PageSetup.BottomMargin = 1;
+            worksheet.PageSetup.LeftMargin = 1;
+            worksheet.PageSetup.RightMargin = 1;
+            for (int i = 1; i < dataGridView1.Columns.Count + 1; i++)
+            {
+                worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
+            }
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                {
+                    var str = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                    worksheet.Cells[i + 2, j + 1] = j != 1 ? str : $"{str.Split(' ')[0]} {str.Split(' ')[1][0]}. {str.Split(' ')[2][0]}.";
+                }
+            }
+            worksheet.Columns.AutoFit(); ;
+            worksheet.PrintPreview();
         }
     }
 }

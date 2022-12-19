@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -163,7 +163,7 @@ namespace KursRab
 
                 var reader = new OleDbCommand($"SELECT id, chat_id FROM workers WHERE id = {WorkerComboBox.SelectedValue}", conn).ExecuteReader();
                 reader.Read();
-                
+
 
 
                 try
@@ -190,7 +190,7 @@ namespace KursRab
             }
         }
 
-        
+
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
@@ -272,7 +272,9 @@ namespace KursRab
         private void AddNewTableButton_Click(object sender, EventArgs e)
         {
             AddNewTableWindow addNewTableWindow = new AddNewTableWindow();
-            addNewTableWindow.FormClosed += (o, args) => { FillComboBoxes();
+            addNewTableWindow.FormClosed += (o, args) =>
+            {
+                FillComboBoxes();
                 UpdateDataGridView();
             };
             addNewTableWindow.Show();
@@ -286,7 +288,7 @@ namespace KursRab
         private void EditTableButton_Click(object sender, EventArgs e)
         {
             EditTableWindow editTableWindow = new EditTableWindow();
-            editTableWindow.FormClosed += (o, args) => { FillComboBoxes();  UpdateDataGridView();};
+            editTableWindow.FormClosed += (o, args) => { FillComboBoxes(); UpdateDataGridView(); };
             editTableWindow.ShowDialog();
 
         }

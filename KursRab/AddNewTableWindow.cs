@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace KursRab
 {
@@ -58,7 +51,7 @@ namespace KursRab
                     fieldComboBoxCell.DataSource = GetColumnNames(dataGridView1[4, rowIndex].Value.ToString());
                     dataGridView1[5, rowIndex].Value = ((DataGridViewComboBoxCell)dataGridView1[5, rowIndex]).Items[0];
                 }
-                
+
             }
         }
 
@@ -104,7 +97,7 @@ namespace KursRab
                     checkBoxList.Add(i);
                 }
             }
-            
+
             return checkBoxList;
         }
 
@@ -128,7 +121,7 @@ namespace KursRab
                     }
 
                     CommandString += $"{dataGridView1.Rows[i].Cells[1].Value} {dataGridView1.Rows[i].Cells[2].Value} CONSTRAINT i PRIMARY KEY,\n";
-                    
+
 
                 }
                 else
@@ -161,7 +154,7 @@ namespace KursRab
 
         private void AddNewTableWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
         }
 
         private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -191,7 +184,7 @@ namespace KursRab
                     }
                 }
             }
-                
+
         }
 
 
